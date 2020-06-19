@@ -4,11 +4,21 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.alikazi.codetest.optus.R
+import com.alikazi.codetest.optus.main.MainActivity
 import com.google.android.material.snackbar.Snackbar
 
 fun View.showSnackbar(message: String) {
     Snackbar.make(this, message, Snackbar.LENGTH_LONG).show()
+}
+
+fun Fragment.onBackPressedInFragment() {
+    if (childFragmentManager.backStackEntryCount > 0) {
+        childFragmentManager.popBackStack()
+    } else {
+        (activity as MainActivity).onBackPressed()
+    }
 }
 
 fun Context.showAlertDialog(title: String?, message: String,

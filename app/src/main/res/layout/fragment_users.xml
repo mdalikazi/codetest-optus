@@ -24,4 +24,9 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/recycler_item_user" />
 
+    <FrameLayout
+        android:id="@+id/usersFragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </RelativeLayout>
