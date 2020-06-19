@@ -6,7 +6,7 @@
     <color name="colorAccent">#F50057</color>
     <color name="colorTextPrimary">@android:color/primary_text_light</color>
     <color name="colorTextSecondary">@android:color/tertiary_text_light</color>
-    <color name="colorUserCardBackground">#1565C0</color>
+    <color name="colorCardBackground">#1565C0</color>
     <color name="colorTextWhite">#FFFFFF</color>
     <color name="colorRipple">#C1C1C1</color>
 

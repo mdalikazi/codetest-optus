@@ -15,7 +15,6 @@
     <style name="AppTheme.DialogOverlay" parent="ThemeOverlay.AppCompat.Dialog.Alert" />
 
     <style name="TextWhite">
-        <item name="android:gravity">center</item>
         <item name="android:textColor">@color/colorTextWhite</item>
     </style>
 
@@ -29,6 +28,18 @@
 
     <style name="TextWhite24" parent="TextWhite">
         <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="CardViewBlue">
+        <item name="android:layout_marginTop">@dimen/mediumMargin</item>
+        <item name="android:layout_marginStart">@dimen/mediumMargin</item>
+        <item name="android:layout_marginEnd">@dimen/mediumMargin</item>
+        <item name="android:foreground">?android:selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="cardCornerRadius">4dp</item>
+        <item name="cardBackgroundColor">@color/colorCardBackground</item>
+        <item name="contentPadding">@dimen/mediumMargin</item>
     </style>
 
 </resources>
