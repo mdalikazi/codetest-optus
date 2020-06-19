@@ -3,5 +3,6 @@
     <string name="app_name">My Application</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="main_fragment_snackbar_message_offline">Looks like you are offline. Check your internet connection.</string>
 
 </resources>
