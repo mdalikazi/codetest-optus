@@ -23,8 +23,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.8"
-        android:background="@color/colorCardBackground"
+        android:padding="@dimen/largeMargin"
         android:gravity="center"
-        tools:text="Image Title" />
+        android:maxLines="4"
+        android:ellipsize="end"
+        android:background="@color/colorCardBackground"
+        tools:text="@android:string/work_profile_deleted_details" />
 
 </LinearLayout>
