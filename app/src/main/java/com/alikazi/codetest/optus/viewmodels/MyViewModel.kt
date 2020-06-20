@@ -4,9 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alikazi.codetest.optus.network.Repository
-import com.alikazi.codetest.optus.utils.DLog
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MyViewModel(private val repository: Repository) : ViewModel() {
 
@@ -19,15 +19,11 @@ class MyViewModel(private val repository: Repository) : ViewModel() {
     private val _errors = MutableLiveData<Exception>()
     val errors get() = _errors
 
-    fun getUsers() {
+    fun getUsersAndPhotos() {
         fetchFromRepository {
-            repository.getUsers()
-        }
-    }
-
-    fun getPhotos() {
-        fetchFromRepository {
-            repository.getPhotos()
+            // Concurrent calls to both APIs
+            withContext(viewModelScope.coroutineContext) { repository.getUsers() }
+            withContext(viewModelScope.coroutineContext) { repository.getPhotos() }
         }
     }
 
