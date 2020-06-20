@@ -2,6 +2,7 @@ package com.alikazi.codetest.optus.network
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.alikazi.codetest.optus.database.AppDatabase
 import com.alikazi.codetest.optus.utils.DLog
 
@@ -18,7 +19,7 @@ class Repository(private val database: AppDatabase) {
     }
 
     private val _users = MutableLiveData<String>()
-    val users: LiveData<String> get() = _users
+    val users: LiveData<String> = Transformations.map(_users) { it }
 
     private val _photos = MutableLiveData<String>()
     val photos: LiveData<String> get() = _photos

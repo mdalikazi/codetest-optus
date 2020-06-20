@@ -28,10 +28,10 @@ object NetworkHelper {
 
     interface Network {
         @GET(Constants.URL_USERS)
-        fun getUsers(): String
+        suspend fun getUsers(): String
 
         @GET(Constants.URL_PHOTOS)
-        fun getPhotos(): String
+        suspend fun getPhotos(): String
     }
 
 }

@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.map
 import com.alikazi.codetest.optus.R
 import com.alikazi.codetest.optus.utils.DLog
 import com.alikazi.codetest.optus.utils.Injector
 import com.alikazi.codetest.optus.utils.showSnackbar
 import com.alikazi.codetest.optus.viewmodels.MyViewModel
 import kotlinx.android.synthetic.main.fragment_users.*
+import java.net.UnknownHostException
 
 @Suppress("DEPRECATION")
 class UsersFragment : Fragment() {
@@ -39,7 +39,11 @@ class UsersFragment : Fragment() {
             .get(MyViewModel::class.java)
 
         myViewModel.users.observe(this, Observer {
-            it?.let {
+            if (it == null) {
+                DLog.d("users is null")
+                myViewModel.getUsers()
+//                myViewModel.getPhotos()
+            } else {
                 DLog.d("users")
             }
         })
@@ -56,7 +60,12 @@ class UsersFragment : Fragment() {
 
         myViewModel.errors.observe(this, Observer {
             it?.let {
-                usersFragmentContainer.showSnackbar(it)
+                if (it is UnknownHostException) {
+                    usersFragmentContainer.showSnackbar(getString(R.string.users_fragment_snackbar_message_offline))
+                } else {
+                    usersFragmentContainer.showSnackbar(it.toString())
+                }
+                DLog.d("error: $it")
             }
         })
     }
@@ -67,6 +76,7 @@ class UsersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //        onBackPressedInFragment()
+        myViewModel.getUsers()
     }
 
     private fun goToAlbumFragment() {
