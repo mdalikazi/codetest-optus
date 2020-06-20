@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/usersFragmentContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,6 +11,7 @@
         android:id="@+id/userInfoTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/smallMargin"
         android:padding="@dimen/mediumMargin"
         android:background="@color/colorTitleBackground"
         android:gravity="center"
@@ -25,8 +27,15 @@
         tools:listitem="@layout/recycler_item_user" />
 
     <FrameLayout
-        android:id="@+id/usersFragmentContainer"
+        android:id="@+id/usersChildFragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <ProgressBar
+        android:id="@+id/usersFragmentProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
 </RelativeLayout>
