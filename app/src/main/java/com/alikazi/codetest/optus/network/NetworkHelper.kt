@@ -24,6 +24,8 @@ object NetworkHelper {
         retrofit.create(Network::class.java)
     }
 
+    fun getNetworkService() = service
+
     interface Network {
         @GET(Constants.URL_USERS)
         fun getUsers(): String
