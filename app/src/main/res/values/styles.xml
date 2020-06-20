@@ -31,7 +31,7 @@
     </style>
 
     <style name="CardViewBlue">
-        <item name="android:layout_marginTop">@dimen/mediumMargin</item>
+        <item name="android:layout_marginBottom">@dimen/mediumMargin</item>
         <item name="android:layout_marginStart">@dimen/mediumMargin</item>
         <item name="android:layout_marginEnd">@dimen/mediumMargin</item>
         <item name="android:foreground">?android:selectableItemBackground</item>
