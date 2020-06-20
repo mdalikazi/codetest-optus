@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.alikazi.codetest.optus.models.Photo
 import com.alikazi.codetest.optus.models.User
 
-@Database(entities = [User::class], version = 1, exportSchema = false)
+@TypeConverters(MyTypeConverters::class)
+@Database(entities = [User::class, Photo::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {

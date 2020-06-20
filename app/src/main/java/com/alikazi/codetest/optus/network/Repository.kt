@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.alikazi.codetest.optus.database.AppDatabase
+import com.alikazi.codetest.optus.models.User
 import com.alikazi.codetest.optus.utils.DLog
 
 class Repository(private val database: AppDatabase) {
@@ -19,7 +20,7 @@ class Repository(private val database: AppDatabase) {
     }
 
     private val _users = MutableLiveData<String>()
-    val users: LiveData<String> = Transformations.map(_users) { it }
+    val users: LiveData<String> get() = _users
 
     private val _photos = MutableLiveData<String>()
     val photos: LiveData<String> get() = _photos
@@ -28,13 +29,13 @@ class Repository(private val database: AppDatabase) {
         DLog.i("getUsers")
         val result = NetworkHelper.getNetworkService().getUsers()
         DLog.d("result $result")
-        _users.postValue(result)
+        _users.postValue(result.toString())
     }
 
     suspend fun getPhotos() {
         DLog.i("getPhotos")
         val result = NetworkHelper.getNetworkService().getPhotos()
         DLog.d("result $result")
-        _photos.postValue(result)
+        _photos.postValue(result.toString())
     }
 }

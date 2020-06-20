@@ -1,5 +1,7 @@
 package com.alikazi.codetest.optus.network
 
+import com.alikazi.codetest.optus.models.Photo
+import com.alikazi.codetest.optus.models.User
 import com.alikazi.codetest.optus.utils.Constants
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -28,10 +30,10 @@ object NetworkHelper {
 
     interface Network {
         @GET(Constants.URL_USERS)
-        suspend fun getUsers(): String
+        suspend fun getUsers(): List<User>
 
         @GET(Constants.URL_PHOTOS)
-        suspend fun getPhotos(): String
+        suspend fun getPhotos(): List<Photo>
     }
 
 }
