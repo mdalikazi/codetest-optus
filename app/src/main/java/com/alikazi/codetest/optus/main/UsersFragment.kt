@@ -16,9 +16,10 @@ import kotlinx.android.synthetic.main.fragment_users.*
 import java.net.UnknownHostException
 
 @Suppress("DEPRECATION")
-class UsersFragment : Fragment() {
+class UsersFragment : Fragment(), UsersRecyclerAdapter.OnUserItemClickListener {
 
     private lateinit var myViewModel: MyViewModel
+    private lateinit var usersRecyclerAdapter: UsersRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +41,11 @@ class UsersFragment : Fragment() {
 
         myViewModel.users.observe(this, Observer {
             if (it == null) {
-                DLog.d("users is null")
-                myViewModel.getUsers()
-//                myViewModel.getPhotos()
+                DLog.d("We have no data")
+                myViewModel.getUsersAndPhotos()
             } else {
                 DLog.d("users")
+                usersRecyclerAdapter.submitList(it)
             }
         })
 
@@ -76,7 +77,18 @@ class UsersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //        onBackPressedInFragment()
-        myViewModel.getUsers()
+        initRecyclerView()
+        myViewModel.getUsersAndPhotos()
+    }
+
+    private fun initRecyclerView() {
+        usersRecyclerAdapter = UsersRecyclerAdapter(activity, this)
+        recyclerViewUsers.adapter = usersRecyclerAdapter
+    }
+
+    override fun onUserClicked(userId: Int) {
+        DLog.d("userId $userId")
+        // TODO
     }
 
     private fun goToAlbumFragment() {
