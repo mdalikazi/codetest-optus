@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.FragmentTransaction
 import com.alikazi.codetest.optus.R
+import com.facebook.stetho.Stetho
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        Stetho.initializeWithDefaults(this)
         if (savedInstanceState == null) {
             goToUsersFragment()
         }

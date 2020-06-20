@@ -9,8 +9,12 @@ import com.alikazi.codetest.optus.models.Photo
 import com.alikazi.codetest.optus.models.User
 
 @TypeConverters(MyTypeConverters::class)
-@Database(entities = [User::class, Photo::class], version = 1, exportSchema = false)
+@Database(entities = [User::class, Photo::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
+
+    abstract fun getUsersDao(): UsersDao
+    abstract fun getPhotosDao(): PhotosDao
+//    abstract fun getUsersWithPhotosDao(): UsersWithPhotosDao
 
     companion object {
         private const val databaseName = "Optus.db"

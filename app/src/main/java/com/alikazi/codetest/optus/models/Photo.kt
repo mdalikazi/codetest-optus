@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 @Entity
 data class Photo(
     @PrimaryKey
-    val albumId: Int,
     val id: Int,
+    val albumId: Int,
     val title: String,
     val url: String,
     val thumbnailUrl: String

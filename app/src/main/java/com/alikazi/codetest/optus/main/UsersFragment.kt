@@ -40,7 +40,7 @@ class UsersFragment : Fragment(), UsersRecyclerAdapter.OnUserItemClickListener {
             .get(MyViewModel::class.java)
 
         myViewModel.users.observe(this, Observer {
-            if (it == null) {
+            if (it.isEmpty()) {
                 DLog.d("We have no data")
                 myViewModel.getUsersAndPhotos()
             } else {
@@ -78,7 +78,6 @@ class UsersFragment : Fragment(), UsersRecyclerAdapter.OnUserItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //        onBackPressedInFragment()
         initRecyclerView()
-        myViewModel.getUsersAndPhotos()
     }
 
     private fun initRecyclerView() {

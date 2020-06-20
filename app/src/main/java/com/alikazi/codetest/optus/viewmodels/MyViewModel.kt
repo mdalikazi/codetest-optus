@@ -10,8 +10,8 @@ import kotlinx.coroutines.withContext
 
 class MyViewModel(private val repository: Repository) : ViewModel() {
 
-    val users = repository.users
-    val photos = repository.photos
+    val users = repository.usersFromDb
+    val photos = repository.photosFromDb
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading get() = _isLoading
