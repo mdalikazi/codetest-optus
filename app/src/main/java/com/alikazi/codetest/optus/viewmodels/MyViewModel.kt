@@ -33,12 +33,12 @@ class MyViewModel(private val repository: Repository) : ViewModel() {
     private fun fetchFromRepository(block: suspend () -> Unit): Job {
         return viewModelScope.launch {
             try {
-                isLoading.value = true
+                _isLoading.value = true
                 block()
             } catch (e: Exception) {
                 _errors.value = e.message
             } finally {
-                isLoading.value = false
+                _isLoading.value = false
             }
         }
     }

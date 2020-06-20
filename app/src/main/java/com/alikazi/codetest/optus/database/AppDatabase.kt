@@ -8,8 +8,6 @@ import androidx.room.RoomDatabase
 @Database(entities = [], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
-
-
     companion object {
         private const val databaseName = "Optus.db"
         private lateinit var INSTANCE: AppDatabase
