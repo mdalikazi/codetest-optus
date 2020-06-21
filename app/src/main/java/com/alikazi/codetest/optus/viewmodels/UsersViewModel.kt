@@ -8,10 +8,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MyViewModel(private val repository: Repository) : ViewModel() {
+class UsersViewModel(private val repository: Repository) : ViewModel() {
 
-    val users = repository.users
-    val photos = repository.photos
+    val users = repository.usersFromDb
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading get() = _isLoading
@@ -22,8 +21,8 @@ class MyViewModel(private val repository: Repository) : ViewModel() {
     fun getUsersAndPhotos() {
         fetchFromRepository {
             // Concurrent calls to both APIs
-            withContext(viewModelScope.coroutineContext) { repository.getUsers() }
-            withContext(viewModelScope.coroutineContext) { repository.getPhotos() }
+            withContext(viewModelScope.coroutineContext) { repository.getUsersFromNetwork() }
+            withContext(viewModelScope.coroutineContext) { repository.getPhotosFromNetwork() }
         }
     }
 

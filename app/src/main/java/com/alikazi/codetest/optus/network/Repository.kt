@@ -1,11 +1,9 @@
 package com.alikazi.codetest.optus.network
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.map
 import com.alikazi.codetest.optus.database.AppDatabase
 import com.alikazi.codetest.optus.models.Photo
-import com.alikazi.codetest.optus.models.User
 import com.alikazi.codetest.optus.utils.DLog
 
 class Repository(private val database: AppDatabase) {
@@ -20,21 +18,26 @@ class Repository(private val database: AppDatabase) {
         }
     }
 
-    private val _users = MutableLiveData<List<User>>()
-    val users: LiveData<List<User>> get() = _users
+    val usersFromDb = database.getUsersDao().users.map { it }
 
-    private val _photos = MutableLiveData<List<Photo>>()
-    val photos: LiveData<List<Photo>> get() = _photos
+    private val _photosWithUserId = MutableLiveData<List<Photo>>()
+    val photosWithUserId get() = _photosWithUserId
 
-    suspend fun getUsers() {
-        DLog.i("getUsers")
+    suspend fun getUsersFromNetwork() {
+        DLog.i("getUsersFromNetwork")
         val users = NetworkHelper.getNetworkService().getUsers()
-        _users.postValue(users)
+        database.getUsersDao().insertUsers(users)
     }
 
-    suspend fun getPhotos() {
-        DLog.i("getPhotos")
+    suspend fun getPhotosFromNetwork() {
+        DLog.i("getPhotosFromNetwork")
         val photos = NetworkHelper.getNetworkService().getPhotos()
-        _photos.postValue(photos)
+        database.getPhotosDao().insertPhotos(photos)
     }
+
+    suspend fun getAlbumWithUserId(userId: Int) {
+        DLog.i("getAlbumWithUserId")
+        _photosWithUserId.postValue(database.getPhotosDao().photosWithUserId(userId))
+    }
+
 }
