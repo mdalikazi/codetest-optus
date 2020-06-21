@@ -1,6 +1,5 @@
 package com.alikazi.codetest.optus.main
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,11 +26,6 @@ class AlbumFragment : Fragment(), AlbumRecyclerAdapter.OnAlbumItemClickListener 
         userId = arguments?.getInt(Constants.INTENT_EXTRA_USER_ID) ?: -1
         DLog.d("userId $userId")
 
-
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
         initPhotosViewModel()
     }
 
@@ -82,7 +76,7 @@ class AlbumFragment : Fragment(), AlbumRecyclerAdapter.OnAlbumItemClickListener 
     }
 
     override fun onAlbumItemClicked(photo: Photo) {
-        // TODO
+        (activity as MainActivity).goToPhotoFragment(photo)
     }
 
 }

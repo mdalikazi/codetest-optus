@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.alikazi.codetest.optus.R
+import com.alikazi.codetest.optus.models.Photo
 import com.alikazi.codetest.optus.utils.Constants
 import com.facebook.stetho.Stetho
 
@@ -34,8 +35,11 @@ class MainActivity : AppCompatActivity() {
         goToChildFragment(fragment)
     }
 
-    fun goToPhotoFragment() {
+    fun goToPhotoFragment(photo: Photo) {
         val fragment = PhotoFragment()
+        val args = Bundle()
+        args.putParcelable(Constants.INTENT_EXTRA_PHOTO_OBJECT, photo)
+        fragment.arguments = args
         goToChildFragment(fragment)
     }
 
