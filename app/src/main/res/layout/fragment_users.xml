@@ -26,16 +26,16 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/recycler_item_user" />
 
-    <FrameLayout
-        android:id="@+id/usersChildFragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <ProgressBar
         android:id="@+id/usersFragmentProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/usersChildFragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

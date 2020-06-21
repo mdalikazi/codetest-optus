@@ -26,13 +26,7 @@ class AlbumFragment : Fragment(), AlbumRecyclerAdapter.OnAlbumItemClickListener 
         userId = arguments?.getInt(Constants.INTENT_EXTRA_USER_ID) ?: -1
         DLog.d("userId $userId")
 
-        initAlbumbsRecyclerView()
         initPhotosViewModel()
-    }
-
-    private fun initAlbumbsRecyclerView() {
-        albumRecyclerAdapter = AlbumRecyclerAdapter(activity, this)
-        recyclerViewAlbum.adapter = albumRecyclerAdapter
     }
 
     private fun initPhotosViewModel() {
@@ -44,7 +38,7 @@ class AlbumFragment : Fragment(), AlbumRecyclerAdapter.OnAlbumItemClickListener 
         albumViewModel.photos.observe(this, Observer {
             it?.let {
                 DLog.d("photos size: ${it.size}")
-//                albumRecyclerAdapter.submitList(it)
+                albumRecyclerAdapter.submitList(it)
             }
         })
 
@@ -70,7 +64,13 @@ class AlbumFragment : Fragment(), AlbumRecyclerAdapter.OnAlbumItemClickListener 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //        onBackPressedInFragment()
+        initAlbumbsRecyclerView()
         albumViewModel.getAlbumWithUserId(userId)
+    }
+
+    private fun initAlbumbsRecyclerView() {
+        albumRecyclerAdapter = AlbumRecyclerAdapter(activity, this)
+        recyclerViewAlbum.adapter = albumRecyclerAdapter
     }
 
     override fun onAlbumItemClicked(photo: Photo) {
@@ -79,7 +79,7 @@ class AlbumFragment : Fragment(), AlbumRecyclerAdapter.OnAlbumItemClickListener 
 
     private fun goToPhotoFragment() {
         childFragmentManager.beginTransaction()
-            .replace(R.id.usersFragmentContainer, PhotoFragment())
+            .replace(R.id.albumChildFragmentContainer, PhotoFragment())
             .addToBackStack(PhotoFragment::class.java.simpleName)
             .commit()
     }

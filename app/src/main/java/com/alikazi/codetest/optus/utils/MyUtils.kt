@@ -1,21 +1,19 @@
 package com.alikazi.codetest.optus.utils
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
-import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
-import com.alikazi.codetest.optus.R
 import com.alikazi.codetest.optus.main.MainActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.snackbar.Snackbar
 
@@ -36,47 +34,32 @@ fun Fragment.onBackPressedInFragment() {
 }
 
 fun ImageView.showImageWithGlide(url: String, progressBar: ProgressBar) {
+    // Workaround for an issue with via.placeholder.com
+    val glideUrl = GlideUrl(
+        url,
+        LazyHeaders.Builder().addHeader("User-Agent", "your-user-agent").build())
     Glide.with(this)
-        .asBitmap()
-        .apply(RequestOptions().centerCrop())
-        .transition(BitmapTransitionOptions().crossFade())
-        .load(url)
-        .addListener(object : RequestListener<Bitmap> {
+        .asDrawable()
+        .load(glideUrl)
+        .transition(DrawableTransitionOptions().crossFade())
+        .addListener(object : RequestListener<Drawable> {
             override fun onLoadFailed(e: GlideException?,
                                       model: Any?,
-                                      target: Target<Bitmap>?,
+                                      target: Target<Drawable>?,
                                       isFirstResource: Boolean): Boolean {
+                DLog.d("onLoadFailed ${e?.message}")
                 progressBar.visibility = View.GONE
-                return true
+                return false
             }
 
-            override fun onResourceReady(resource: Bitmap?,
+            override fun onResourceReady(resource: Drawable?,
                                          model: Any?,
-                                         target: Target<Bitmap>?,
+                                         target: Target<Drawable>?,
                                          dataSource: DataSource?,
                                          isFirstResource: Boolean): Boolean {
                 progressBar.visibility = View.GONE
-                return true
+                return false
             }
         })
         .into(this)
-}
-
-fun Context.showAlertDialog(title: String?, message: String,
-                            okText: String?, okClickListener: DialogInterface.OnClickListener?,
-                            cancelText: String?, cancelClickListener: DialogInterface.OnClickListener?) {
-    val builder = AlertDialog.Builder(this, R.style.AppTheme_DialogOverlay)
-    builder.setCancelable(false)
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton(okText ?: this.getString(R.string.ok),
-                    okClickListener ?: DialogInterface.OnClickListener { dialog, _ ->
-                        dialog.dismiss()
-                    })
-            .setNegativeButton(cancelText ?: this.getString(R.string.cancel),
-                    cancelClickListener ?: DialogInterface.OnClickListener { dialog, _ ->
-                        dialog.dismiss()
-                    })
-            .create()
-            .show()
 }
