@@ -7,15 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.alikazi.codetest.optus.R
+import com.alikazi.codetest.optus.models.Photo
 import com.alikazi.codetest.optus.utils.*
 import com.alikazi.codetest.optus.viewmodels.AlbumViewModel
 import kotlinx.android.synthetic.main.fragment_album.*
 import java.net.UnknownHostException
 
 @Suppress("DEPRECATION")
-class AlbumFragment : Fragment() {
+class AlbumFragment : Fragment(), AlbumRecyclerAdapter.OnAlbumItemClickListener {
 
     private var userId = -1
+    private lateinit var albumRecyclerAdapter: AlbumRecyclerAdapter
     private lateinit var albumViewModel: AlbumViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,12 +26,13 @@ class AlbumFragment : Fragment() {
         userId = arguments?.getInt(Constants.INTENT_EXTRA_USER_ID) ?: -1
         DLog.d("userId $userId")
 
-        initPhotosViewModel()
         initAlbumbsRecyclerView()
+        initPhotosViewModel()
     }
 
     private fun initAlbumbsRecyclerView() {
-
+        albumRecyclerAdapter = AlbumRecyclerAdapter(activity, this)
+        recyclerViewAlbum.adapter = albumRecyclerAdapter
     }
 
     private fun initPhotosViewModel() {
@@ -41,6 +44,7 @@ class AlbumFragment : Fragment() {
         albumViewModel.photos.observe(this, Observer {
             it?.let {
                 DLog.d("photos size: ${it.size}")
+//                albumRecyclerAdapter.submitList(it)
             }
         })
 
@@ -69,13 +73,15 @@ class AlbumFragment : Fragment() {
         albumViewModel.getAlbumWithUserId(userId)
     }
 
+    override fun onAlbumItemClicked(photo: Photo) {
+        // TODO
+    }
+
     private fun goToPhotoFragment() {
         childFragmentManager.beginTransaction()
             .replace(R.id.usersFragmentContainer, PhotoFragment())
             .addToBackStack(PhotoFragment::class.java.simpleName)
             .commit()
     }
-
-
 
 }

@@ -35,7 +35,7 @@ fun Fragment.onBackPressedInFragment() {
     }
 }
 
-fun Context.showImageWithGlide(url: String, imageView: ImageView, progressBar: ProgressBar) {
+fun ImageView.showImageWithGlide(url: String, progressBar: ProgressBar) {
     Glide.with(this)
         .asBitmap()
         .apply(RequestOptions().centerCrop())
@@ -59,7 +59,7 @@ fun Context.showImageWithGlide(url: String, imageView: ImageView, progressBar: P
                 return true
             }
         })
-        .into(imageView)
+        .into(this)
 }
 
 fun Context.showAlertDialog(title: String?, message: String,

@@ -12,7 +12,7 @@ import com.alikazi.codetest.optus.R
 import com.alikazi.codetest.optus.models.User
 
 class UsersRecyclerAdapter(context: Context?, private val listener: OnUserItemClickListener) :
-    ListAdapter<User, UsersRecyclerAdapter.UserViewHolder>(DIFF_UTIL) {
+    ListAdapter<User, UsersRecyclerAdapter.UserItemViewHolder>(DIFF_UTIL) {
 
     companion object {
         val DIFF_UTIL = object : DiffUtil.ItemCallback<User>() {
@@ -26,12 +26,12 @@ class UsersRecyclerAdapter(context: Context?, private val listener: OnUserItemCl
 
     private val inflater = LayoutInflater.from(context)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserItemViewHolder {
         val view = inflater.inflate(R.layout.recycler_item_user, parent, false)
-        return UserViewHolder(view)
+        return UserItemViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: UserItemViewHolder, position: Int) {
         val user = getItem(position)
         holder.userName.text = user.name
         holder.userEmail.text = user.email
@@ -41,7 +41,7 @@ class UsersRecyclerAdapter(context: Context?, private val listener: OnUserItemCl
         }
     }
 
-    class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class UserItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val userName: TextView = itemView.findViewById(R.id.userName)
         val userEmail: TextView = itemView.findViewById(R.id.userEmail)
         val userPhone: TextView = itemView.findViewById(R.id.userPhone)
