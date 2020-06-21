@@ -14,7 +14,6 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getUsersDao(): UsersDao
     abstract fun getPhotosDao(): PhotosDao
-//    abstract fun getUsersWithPhotosDao(): UsersWithPhotosDao
 
     companion object {
         private const val databaseName = "Optus.db"

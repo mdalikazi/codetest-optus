@@ -8,10 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alikazi.codetest.optus.R
-import com.alikazi.codetest.optus.utils.Constants
-import com.alikazi.codetest.optus.utils.DLog
-import com.alikazi.codetest.optus.utils.Injector
-import com.alikazi.codetest.optus.utils.showSnackbar
+import com.alikazi.codetest.optus.utils.*
 import com.alikazi.codetest.optus.viewmodels.UsersViewModel
 import kotlinx.android.synthetic.main.fragment_users.*
 import java.net.UnknownHostException
@@ -50,22 +47,16 @@ class UsersFragment : Fragment(), UsersRecyclerAdapter.OnUserItemClickListener {
             }
         })
 
-        usersViewModel.photos.observe(this, Observer {
-            it?.let {
-                DLog.d("photos")
-            }
-        })
-
         usersViewModel.isLoading.observe(this, Observer {
-            processVisibility(usersFragmentProgressBar, it)
+            usersFragmentProgressBar.processVisibility(it)
         })
 
         usersViewModel.errors.observe(this, Observer {
             it?.let {
                 if (it is UnknownHostException) {
-                    usersFragmentContainer.showSnackbar(getString(R.string.users_fragment_snackbar_message_offline))
+                    usersFragmentContainer.showSnackbar(getString(R.string.snackbar_message_no_internet))
                 } else {
-                    usersFragmentContainer.showSnackbar(it.toString())
+                    usersFragmentContainer.showSnackbar(getString(R.string.snackbar_message_generic_error))
                 }
                 DLog.d("error: $it")
             }
@@ -102,7 +93,4 @@ class UsersFragment : Fragment(), UsersRecyclerAdapter.OnUserItemClickListener {
             .commit()
     }
 
-    private fun processVisibility(view: View, shouldShow: Boolean) {
-        view.visibility = if (shouldShow) View.VISIBLE else View.GONE
-    }
 }

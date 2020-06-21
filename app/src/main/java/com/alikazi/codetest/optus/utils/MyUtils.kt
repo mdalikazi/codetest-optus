@@ -23,6 +23,10 @@ fun View.showSnackbar(message: String) {
     Snackbar.make(this, message, Snackbar.LENGTH_LONG).show()
 }
 
+fun View.processVisibility(shouldShow: Boolean) {
+    this.visibility = if (shouldShow) View.VISIBLE else View.GONE
+}
+
 fun Fragment.onBackPressedInFragment() {
     if (childFragmentManager.backStackEntryCount > 0) {
         childFragmentManager.popBackStack()

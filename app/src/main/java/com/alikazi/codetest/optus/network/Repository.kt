@@ -36,7 +36,7 @@ class Repository(private val database: AppDatabase) {
         database.getPhotosDao().insertPhotos(photos)
     }
 
-    suspend fun getPhotosWithUserId(userId: Int) {
+    suspend fun getAlbumWithUserId(userId: Int) {
         _photosWithUserId.postValue(database.getPhotosDao().photosWithUserId(userId))
     }
 

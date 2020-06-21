@@ -7,7 +7,7 @@ import com.alikazi.codetest.optus.network.Repository
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class PhotosViewModel(private val repository: Repository) : ViewModel() {
+class AlbumViewModel(private val repository: Repository) : ViewModel() {
 
     val photos = repository.photosWithUserId
 
@@ -17,15 +17,17 @@ class PhotosViewModel(private val repository: Repository) : ViewModel() {
     private val _errors = MutableLiveData<Exception>()
     val errors get() = _errors
 
-    fun getPhotosWithUserId(userId: Int) {
-        viewModelScope.launch {
-            try {
-                _isLoading.value = true
-                repository.getPhotosWithUserId(userId)
-            } catch (e: Exception) {
-                _errors.value = e
-            } finally {
-                _isLoading.value = false
+    fun getAlbumWithUserId(userId: Int) {
+        if (userId != -1) {
+            viewModelScope.launch {
+                try {
+                    _isLoading.value = true
+                    repository.getAlbumWithUserId(userId)
+                } catch (e: Exception) {
+                    _errors.value = e
+                } finally {
+                    _isLoading.value = false
+                }
             }
         }
     }
