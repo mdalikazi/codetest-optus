@@ -4,14 +4,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alikazi.codetest.optus.network.Repository
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import java.lang.Exception
 
-class MyViewModel(private val repository: Repository) : ViewModel() {
+class PhotosViewModel(private val repository: Repository) : ViewModel() {
 
-    val users = repository.usersFromDb
-    val photos = repository.photosFromDb
+    val photos = repository.photosWithUserId
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading get() = _isLoading
@@ -19,19 +17,11 @@ class MyViewModel(private val repository: Repository) : ViewModel() {
     private val _errors = MutableLiveData<Exception>()
     val errors get() = _errors
 
-    fun getUsersAndPhotos() {
-        fetchFromRepository {
-            // Concurrent calls to both APIs
-            withContext(viewModelScope.coroutineContext) { repository.getUsers() }
-            withContext(viewModelScope.coroutineContext) { repository.getPhotos() }
-        }
-    }
-
-    private fun fetchFromRepository(block: suspend () -> Unit): Job {
-        return viewModelScope.launch {
+    fun getPhotosWithUserId(userId: Int) {
+        viewModelScope.launch {
             try {
                 _isLoading.value = true
-                block()
+                repository.getPhotosWithUserId(userId)
             } catch (e: Exception) {
                 _errors.value = e
             } finally {

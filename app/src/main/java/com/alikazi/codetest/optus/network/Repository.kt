@@ -1,7 +1,10 @@
 package com.alikazi.codetest.optus.network
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.alikazi.codetest.optus.database.AppDatabase
+import com.alikazi.codetest.optus.models.Photo
 import com.alikazi.codetest.optus.utils.DLog
 
 class Repository(private val database: AppDatabase) {
@@ -17,17 +20,24 @@ class Repository(private val database: AppDatabase) {
     }
 
     val usersFromDb = database.getUsersDao().users.map { it }
-    val photosFromDb = database.getPhotosDao().photos.map { it }
 
-    suspend fun getUsers() {
+    private val _photosWithUserId = MutableLiveData<List<Photo>>()
+    val photosWithUserId get() = _photosWithUserId
+
+    suspend fun getUsersFromNetwork() {
         DLog.i("getUsers")
         val users = NetworkHelper.getNetworkService().getUsers()
         database.getUsersDao().insertUsers(users)
     }
 
-    suspend fun getPhotos() {
+    suspend fun getPhotosFromNetwork() {
         DLog.i("getPhotos")
         val photos = NetworkHelper.getNetworkService().getPhotos()
         database.getPhotosDao().insertPhotos(photos)
     }
+
+    suspend fun getPhotosWithUserId(userId: Int) {
+        _photosWithUserId.postValue(database.getPhotosDao().photosWithUserId(userId))
+    }
+
 }

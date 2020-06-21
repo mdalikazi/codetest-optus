@@ -3,7 +3,6 @@ package com.alikazi.codetest.optus.database
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.alikazi.codetest.optus.models.Photo
-import com.alikazi.codetest.optus.models.User
 
 @Dao
 interface PhotosDao {
@@ -14,5 +13,8 @@ interface PhotosDao {
     @get:Transaction
     @get:Query("SELECT * FROM Photo")
     val photos: LiveData<List<Photo>>
+
+    @Query("SELECT * FROM Photo WHERE albumId = :userId")
+    suspend fun photosWithUserId(userId: Int): List<Photo>
 
 }

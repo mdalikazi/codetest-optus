@@ -8,17 +8,18 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alikazi.codetest.optus.R
+import com.alikazi.codetest.optus.utils.Constants
 import com.alikazi.codetest.optus.utils.DLog
 import com.alikazi.codetest.optus.utils.Injector
 import com.alikazi.codetest.optus.utils.showSnackbar
-import com.alikazi.codetest.optus.viewmodels.MyViewModel
+import com.alikazi.codetest.optus.viewmodels.UsersViewModel
 import kotlinx.android.synthetic.main.fragment_users.*
 import java.net.UnknownHostException
 
 @Suppress("DEPRECATION")
 class UsersFragment : Fragment(), UsersRecyclerAdapter.OnUserItemClickListener {
 
-    private lateinit var myViewModel: MyViewModel
+    private lateinit var usersViewModel: UsersViewModel
     private lateinit var usersRecyclerAdapter: UsersRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,32 +35,32 @@ class UsersFragment : Fragment(), UsersRecyclerAdapter.OnUserItemClickListener {
          * causes an extra trigger on observed LiveData.
          */
         // Using full class name to avoid deprecated warning in import
-        myViewModel = androidx.lifecycle.ViewModelProviders.of(
+        usersViewModel = androidx.lifecycle.ViewModelProviders.of(
             this,
             Injector.provideMyViewModelFactory(activity!!))
-            .get(MyViewModel::class.java)
+            .get(UsersViewModel::class.java)
 
-        myViewModel.users.observe(this, Observer {
+        usersViewModel.users.observe(this, Observer {
             if (it.isEmpty()) {
                 DLog.d("We have no data")
-                myViewModel.getUsersAndPhotos()
+                usersViewModel.getUsersAndPhotos()
             } else {
                 DLog.d("users")
                 usersRecyclerAdapter.submitList(it)
             }
         })
 
-        myViewModel.photos.observe(this, Observer {
+        usersViewModel.photos.observe(this, Observer {
             it?.let {
                 DLog.d("photos")
             }
         })
 
-        myViewModel.isLoading.observe(this, Observer {
+        usersViewModel.isLoading.observe(this, Observer {
             processVisibility(usersFragmentProgressBar, it)
         })
 
-        myViewModel.errors.observe(this, Observer {
+        usersViewModel.errors.observe(this, Observer {
             it?.let {
                 if (it is UnknownHostException) {
                     usersFragmentContainer.showSnackbar(getString(R.string.users_fragment_snackbar_message_offline))
@@ -87,12 +88,16 @@ class UsersFragment : Fragment(), UsersRecyclerAdapter.OnUserItemClickListener {
 
     override fun onUserClicked(userId: Int) {
         DLog.d("userId $userId")
-        // TODO
+        goToAlbumFragment(userId)
     }
 
-    private fun goToAlbumFragment() {
+    private fun goToAlbumFragment(userId: Int) {
+        val fragment = AlbumFragment()
+        val args = Bundle()
+        args.putInt(Constants.INTENT_EXTRA_USER_ID, userId)
+        fragment.arguments = args
         childFragmentManager.beginTransaction()
-            .replace(R.id.usersChildFragmentContainer, AlbumFragment())
+            .replace(R.id.usersChildFragmentContainer, fragment)
             .addToBackStack(AlbumFragment::class.java.simpleName)
             .commit()
     }
