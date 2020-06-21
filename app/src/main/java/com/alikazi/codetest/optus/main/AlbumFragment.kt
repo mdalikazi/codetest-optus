@@ -1,5 +1,6 @@
 package com.alikazi.codetest.optus.main
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,11 @@ class AlbumFragment : Fragment(), AlbumRecyclerAdapter.OnAlbumItemClickListener 
         userId = arguments?.getInt(Constants.INTENT_EXTRA_USER_ID) ?: -1
         DLog.d("userId $userId")
 
+
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
         initPhotosViewModel()
     }
 
@@ -37,8 +43,10 @@ class AlbumFragment : Fragment(), AlbumRecyclerAdapter.OnAlbumItemClickListener 
 
         albumViewModel.photos.observe(this, Observer {
             it?.let {
-                DLog.d("photos size: ${it.size}")
-                albumRecyclerAdapter.submitList(it)
+                if (albumRecyclerAdapter.itemCount == 0) {
+                    DLog.d("photos size: ${it.size}")
+                    albumRecyclerAdapter.submitList(it)
+                }
             }
         })
 
@@ -75,13 +83,6 @@ class AlbumFragment : Fragment(), AlbumRecyclerAdapter.OnAlbumItemClickListener 
 
     override fun onAlbumItemClicked(photo: Photo) {
         // TODO
-    }
-
-    private fun goToPhotoFragment() {
-        childFragmentManager.beginTransaction()
-            .replace(R.id.albumChildFragmentContainer, PhotoFragment())
-            .addToBackStack(PhotoFragment::class.java.simpleName)
-            .commit()
     }
 
 }

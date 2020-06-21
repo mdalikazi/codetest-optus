@@ -19,8 +19,8 @@ class UsersFragment : Fragment(), UsersRecyclerAdapter.OnUserItemClickListener {
     private lateinit var usersViewModel: UsersViewModel
     private lateinit var usersRecyclerAdapter: UsersRecyclerAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
         initMyViewModel()
     }
 
@@ -42,7 +42,6 @@ class UsersFragment : Fragment(), UsersRecyclerAdapter.OnUserItemClickListener {
                 DLog.d("We have no data")
                 usersViewModel.getUsersAndPhotos()
             } else {
-                DLog.d("users")
                 usersRecyclerAdapter.submitList(it)
             }
         })
@@ -79,18 +78,7 @@ class UsersFragment : Fragment(), UsersRecyclerAdapter.OnUserItemClickListener {
 
     override fun onUserClicked(userId: Int) {
         DLog.d("userId $userId")
-        goToAlbumFragment(userId)
-    }
-
-    private fun goToAlbumFragment(userId: Int) {
-        val fragment = AlbumFragment()
-        val args = Bundle()
-        args.putInt(Constants.INTENT_EXTRA_USER_ID, userId)
-        fragment.arguments = args
-        childFragmentManager.beginTransaction()
-            .replace(R.id.usersChildFragmentContainer, fragment)
-            .addToBackStack(AlbumFragment::class.java.simpleName)
-            .commit()
+        (activity as MainActivity).goToAlbumFragment(userId)
     }
 
 }
