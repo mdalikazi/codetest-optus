@@ -1,23 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/albumFragmentContainer"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewAlbum"
+    <data>
+
+        <variable
+            name="fragment"
+            type="com.alikazi.codetest.optus.main.AlbumFragment" />
+
+        <variable
+            name="viewModel"
+            type="com.alikazi.codetest.optus.viewmodels.AlbumViewModel" />
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/albumFragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/recycler_item_album" />
+        android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/albumFragmentProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewAlbum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:setAdapter="@{fragment.albumRecyclerAdapter}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/recycler_item_album" />
 
-</RelativeLayout>
+        <ProgressBar
+            android:id="@+id/albumFragmentProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            app:showWhile="@{viewModel.isLoading}" />
+
+    </RelativeLayout>
+
+</layout>

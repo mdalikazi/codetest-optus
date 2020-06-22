@@ -47,7 +47,8 @@ class UsersFragment : Fragment(), UsersRecyclerAdapter.OnUserItemClickListener {
         })
 
         usersViewModel.isLoading.observe(this, Observer {
-            usersFragmentProgressBar.processVisibility(it)
+//            usersFragmentProgressBar.processVisibility(it)
+            // TODO
         })
 
         usersViewModel.errors.observe(this, Observer {
@@ -67,7 +68,6 @@ class UsersFragment : Fragment(), UsersRecyclerAdapter.OnUserItemClickListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        onBackPressedInFragment()
         initRecyclerView()
     }
 
