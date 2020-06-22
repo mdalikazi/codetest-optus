@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private fun goToUsersFragment() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.mainActivityFragmentContainer, UsersFragment())
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
     }
 
