@@ -1,36 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/usersFragmentContainer"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        style="@style/TextWhite20"
-        android:id="@+id/userInfoTitle"
+    <data>
+
+        <variable
+            name="usersAdapter"
+            type="androidx.recyclerview.widget.ListAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.alikazi.codetest.optus.viewmodels.UsersViewModel" />
+
+    </data>
+
+
+    <RelativeLayout
+        android:id="@+id/usersFragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/smallMargin"
-        android:padding="@dimen/mediumMargin"
-        android:background="@color/colorTitleBackground"
-        android:gravity="center"
-        android:text="@string/title_user_info" />
+        android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewUsers"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/userInfoTitle"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/recycler_item_user" />
+        <TextView
+            style="@style/TextWhite20"
+            android:id="@+id/userInfoTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/smallMargin"
+            android:padding="@dimen/mediumMargin"
+            android:background="@color/colorTitleBackground"
+            android:gravity="center"
+            android:text="@string/title_user_info" />
 
-    <ProgressBar
-        android:id="@+id/usersFragmentProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewUsers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/userInfoTitle"
+            android:orientation="vertical"
+            app:setAdapter="@{usersAdapter}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/recycler_item_user" />
 
-</RelativeLayout>
+        <ProgressBar
+            android:id="@+id/usersFragmentProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            app:showWhile="@{viewModel.isLoading}"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</layout>

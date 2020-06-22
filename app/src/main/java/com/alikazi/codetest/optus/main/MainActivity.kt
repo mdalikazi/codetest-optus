@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private fun goToUsersFragment() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.mainActivityFragmentContainer, UsersFragment())
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
     }
 
@@ -45,8 +45,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun goToChildFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.slide_in_left, 0, 0, R.anim.slide_out_right)
             .replace(R.id.mainActivityFragmentContainer, fragment)
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .addToBackStack(fragment::class.java.simpleName)
             .commit()
     }

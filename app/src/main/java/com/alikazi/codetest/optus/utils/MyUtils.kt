@@ -4,9 +4,9 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
-import androidx.fragment.app.Fragment
+import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.alikazi.codetest.optus.R
-import com.alikazi.codetest.optus.main.MainActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -22,16 +22,22 @@ fun View.showSnackbar(message: String) {
     Snackbar.make(this, message, Snackbar.LENGTH_LONG).show()
 }
 
-fun View.processVisibility(shouldShow: Boolean) {
-    this.visibility = if (shouldShow) View.VISIBLE else View.GONE
+@BindingAdapter("showWhile")
+fun showWhile(view: View, shouldShow: Boolean) {
+    view.visibility = if (shouldShow) View.VISIBLE else View.GONE
 }
 
-fun ImageView.showImageWithGlide(url: String, progressBar: ProgressBar) {
+@BindingAdapter("setAdapter")
+fun setAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>) {
+    recyclerView.adapter = adapter
+}
+
+@BindingAdapter("showImageWithGlide", "imageProgressBar", requireAll = false)
+fun showImageWithGlide(imageView: ImageView, url: String, progressBar: ProgressBar?) {
     // Workaround for an issue with via.placeholder.com
-    val glideUrl = GlideUrl(
-        url,
+    val glideUrl = GlideUrl(url,
         LazyHeaders.Builder().addHeader("User-Agent", "your-user-agent").build())
-    Glide.with(this)
+    Glide.with(imageView)
         .asDrawable()
         .load(glideUrl)
         .apply(RequestOptions().error(R.drawable.ic_error))
@@ -42,7 +48,7 @@ fun ImageView.showImageWithGlide(url: String, progressBar: ProgressBar) {
                                       target: Target<Drawable>?,
                                       isFirstResource: Boolean): Boolean {
                 DLog.d("onLoadFailed ${e?.message}")
-                progressBar.visibility = View.GONE
+                progressBar?.visibility = View.GONE
                 return false
             }
 
@@ -51,17 +57,9 @@ fun ImageView.showImageWithGlide(url: String, progressBar: ProgressBar) {
                                          target: Target<Drawable>?,
                                          dataSource: DataSource?,
                                          isFirstResource: Boolean): Boolean {
-                progressBar.visibility = View.GONE
+                progressBar?.visibility = View.GONE
                 return false
             }
         })
-        .into(this)
-}
-
-fun Fragment.onBackPressedInFragment() {
-    if (childFragmentManager.backStackEntryCount > 0) {
-        childFragmentManager.popBackStack()
-    } else {
-        (activity as MainActivity).onBackPressed()
-    }
+        .into(imageView)
 }

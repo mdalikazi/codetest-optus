@@ -1,44 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="@dimen/mediumMargin"
-    android:gravity="center"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <data>
+
+        <variable
+            name="photo"
+            type="com.alikazi.codetest.optus.models.Photo" />
+
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/mediumMargin">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/mediumMargin"
+        android:background="?android:windowBackground">
 
-        <ImageView
-            android:id="@+id/photoImageView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="380dp"
-            android:scaleType="center"
-            android:layout_centerInParent="true"
-            android:contentDescription="@null"
-            tools:src="@mipmap/ic_launcher" />
-
-        <ProgressBar
-            android:id="@+id/photoFragmentProgressBar"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+            android:orientation="vertical">
 
-    </RelativeLayout>
-    
-    <TextView
-        style="@style/TextWhite16"
-        android:id="@+id/photoTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/largeMargin"
-        android:gravity="center"
-        android:maxLines="4"
-        android:ellipsize="end"
-        android:background="@color/colorCardBackground"
-        tools:text="@android:string/work_profile_deleted_details" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/mediumMargin">
 
-</LinearLayout>
+                <ImageView
+                    android:id="@+id/photoImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="380dp"
+                    android:scaleType="center"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@null"
+                    app:showImageWithGlide="@{photo.url}"
+                    app:imageProgressBar="@{photoFragmentProgressBar}"
+                    tools:src="@mipmap/ic_launcher" />
+
+                <ProgressBar
+                    android:id="@+id/photoFragmentProgressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true" />
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/TextWhite16"
+                android:id="@+id/photoTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/largeMargin"
+                android:gravity="center"
+                android:maxLines="4"
+                android:ellipsize="end"
+                android:background="@color/colorCardBackground"
+                android:text="@{photo.title}"
+                tools:text="@android:string/work_profile_deleted_details" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</layout>

@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.alikazi.codetest.optus.R
+import com.alikazi.codetest.optus.databinding.RecyclerItemUserBinding
 import com.alikazi.codetest.optus.models.User
 
 class UsersRecyclerAdapter(context: Context?, private val listener: OnUserItemClickListener) :
@@ -27,24 +29,24 @@ class UsersRecyclerAdapter(context: Context?, private val listener: OnUserItemCl
     private val inflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserItemViewHolder {
-        val view = inflater.inflate(R.layout.recycler_item_user, parent, false)
-        return UserItemViewHolder(view)
+        val binding: RecyclerItemUserBinding = DataBindingUtil.inflate(
+            inflater, R.layout.recycler_item_user, parent, false)
+        return UserItemViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: UserItemViewHolder, position: Int) {
-        val user = getItem(position)
-        holder.userName.text = user.name
-        holder.userEmail.text = user.email
-        holder.userPhone.text = user.phone
-        holder.itemView.setOnClickListener {
-            listener.onUserClicked(user.id)
-        }
+        holder.bind(getItem(position))
     }
 
-    inner class UserItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val userName: TextView = itemView.findViewById(R.id.userName)
-        val userEmail: TextView = itemView.findViewById(R.id.userEmail)
-        val userPhone: TextView = itemView.findViewById(R.id.userPhone)
+    inner class UserItemViewHolder(private var binding: RecyclerItemUserBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(user: User) {
+            binding.user = user
+            binding.onUserItemClickListener = listener
+            binding.executePendingBindings()
+        }
+
     }
 
     interface OnUserItemClickListener {
