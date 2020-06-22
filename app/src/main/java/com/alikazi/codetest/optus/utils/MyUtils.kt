@@ -35,8 +35,7 @@ fun setAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<Recycle
 @BindingAdapter("showImageWithGlide", "imageProgressBar", requireAll = false)
 fun showImageWithGlide(imageView: ImageView, url: String, progressBar: ProgressBar?) {
     // Workaround for an issue with via.placeholder.com
-    val glideUrl = GlideUrl(
-        url,
+    val glideUrl = GlideUrl(url,
         LazyHeaders.Builder().addHeader("User-Agent", "your-user-agent").build())
     Glide.with(imageView)
         .asDrawable()

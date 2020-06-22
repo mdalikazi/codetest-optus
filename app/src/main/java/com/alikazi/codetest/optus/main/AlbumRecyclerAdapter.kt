@@ -49,6 +49,7 @@ class AlbumRecyclerAdapter(context: Context?, private val listener: OnAlbumItemC
             binding.onAlbumItemClickListener = listener
             binding.executePendingBindings()
         }
+
     }
 
     interface OnAlbumItemClickListener {

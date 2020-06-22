@@ -18,7 +18,6 @@ class PhotoFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         photo = arguments?.getParcelable(Constants.INTENT_EXTRA_PHOTO_OBJECT)
         DLog.d("photoId ${photo?.id}")
     }

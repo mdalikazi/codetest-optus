@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="fragment"
-            type="com.alikazi.codetest.optus.main.AlbumFragment" />
+            name="albumAdapter"
+            type="com.alikazi.codetest.optus.main.AlbumRecyclerAdapter" />
 
         <variable
             name="viewModel"
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:setAdapter="@{fragment.albumRecyclerAdapter}"
+            app:setAdapter="@{albumAdapter}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/recycler_item_album" />
 

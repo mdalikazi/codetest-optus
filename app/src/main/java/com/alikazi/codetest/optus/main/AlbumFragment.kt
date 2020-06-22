@@ -63,7 +63,7 @@ class AlbumFragment : Fragment(), AlbumRecyclerAdapter.OnAlbumItemClickListener 
         val binding: FragmentAlbumBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_album, container, false)
         binding.apply {
-            fragment = this@AlbumFragment
+            albumAdapter = albumRecyclerAdapter
             viewModel = albumViewModel
             lifecycleOwner = this@AlbumFragment
         }
