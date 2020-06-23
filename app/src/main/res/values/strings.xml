@@ -1,7 +1,10 @@
 <resources>
 
-    <string name="app_name">My Application</string>
+    <string name="app_name">CodeTest-Optus</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="title_user_info">User Info</string>
+    <string name="snackbar_message_no_internet">Looks like you are offline. Check your internet connection.</string>
+    <string name="snackbar_message_generic_error">Something went wrong. Please try again.</string>
 
 </resources>

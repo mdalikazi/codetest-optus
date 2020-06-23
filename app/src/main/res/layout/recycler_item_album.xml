@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    
+    <data>
+        
+        <variable
+            name="photo"
+            type="com.alikazi.codetest.optus.models.Photo" />
+
+        <variable
+            name="onAlbumItemClickListener"
+            type="com.alikazi.codetest.optus.main.AlbumRecyclerAdapter.OnAlbumItemClickListener" />
+        
+    </data>
+    
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/mediumMargin"
+        android:onClick="@{() -> onAlbumItemClickListener.onAlbumItemClicked(photo)}"
+        style="@style/CardViewBlue">
+    
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/mediumMargin">
+    
+                <ImageView
+                    android:id="@+id/albumThumbnail"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="@null"
+                    app:imageProgressBar="@{albumThumbnailProgressBar}"
+                    app:showImageWithGlide="@{photo.thumbnailUrl}"
+                    tools:src="@mipmap/ic_launcher" />
+    
+                <ProgressBar
+                    android:id="@+id/albumThumbnailProgressBar"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerInParent="true" />
+    
+            </RelativeLayout>
+    
+            <TextView
+                style="@style/TextWhite16"
+                android:id="@+id/albumTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:text="@{photo.title}"
+                tools:text="@android:string/work_profile_deleted_details"/>
+    
+        </LinearLayout>
+    
+    </androidx.cardview.widget.CardView>
+
+</layout>
