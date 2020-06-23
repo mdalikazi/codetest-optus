@@ -10,7 +10,10 @@ import androidx.lifecycle.Observer
 import com.alikazi.codetest.optus.R
 import com.alikazi.codetest.optus.databinding.FragmentAlbumBinding
 import com.alikazi.codetest.optus.models.Photo
-import com.alikazi.codetest.optus.utils.*
+import com.alikazi.codetest.optus.utils.Constants
+import com.alikazi.codetest.optus.utils.DLog
+import com.alikazi.codetest.optus.utils.Injector
+import com.alikazi.codetest.optus.utils.showSnackbar
 import com.alikazi.codetest.optus.viewmodels.AlbumViewModel
 import kotlinx.android.synthetic.main.fragment_album.*
 import java.net.UnknownHostException
@@ -19,8 +22,8 @@ import java.net.UnknownHostException
 class AlbumFragment : Fragment(), AlbumRecyclerAdapter.OnAlbumItemClickListener {
 
     private var userId = -1
-    lateinit var albumRecyclerAdapter: AlbumRecyclerAdapter
-    lateinit var albumViewModel: AlbumViewModel
+    private lateinit var albumRecyclerAdapter: AlbumRecyclerAdapter
+    private lateinit var albumViewModel: AlbumViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
