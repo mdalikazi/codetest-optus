@@ -1,36 +1,37 @@
 package com.alikazi.codetest.optus
 
+import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.LargeTest
-import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.core.app.ApplicationProvider
 import com.alikazi.codetest.optus.database.AppDatabase
 import com.alikazi.codetest.optus.database.PhotosDao
 import com.alikazi.codetest.optus.database.UsersDao
 import com.alikazi.codetest.optus.models.Photo
 import com.alikazi.codetest.optus.utils.DLog
 import kotlinx.coroutines.runBlocking
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.*
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
+import org.robolectric.RobolectricTestRunner
 import java.io.IOException
 
-@RunWith(AndroidJUnit4::class)
-@LargeTest
+@RunWith(RobolectricTestRunner::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 class DatabaseTest {
-
-    @get:Rule
-    val executor = InstantTaskExecutorRule()
 
     private lateinit var database: AppDatabase
     private lateinit var usersDao: UsersDao
     private lateinit var photosDao: PhotosDao
 
+    @get:Rule
+    val executor = InstantTaskExecutorRule()
+
     @Before
     fun openDatabase() {
-        val context = InstrumentationRegistry.getInstrumentation().context
+        val context:Application = ApplicationProvider.getApplicationContext()
         database = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
         usersDao = database.getUsersDao()
         photosDao = database.getPhotosDao()
@@ -51,11 +52,11 @@ class DatabaseTest {
         }
         // Check data
         usersDao.users.testingObserver {
-            assert(it.size == 2)
-            assert(it[0].name == "John Doe")
-            assert(it[0].address.street == "1 York Street")
-            assert(it[1].username == "joedoan")
-            assert(it[1].company.name == "XYZ Company")
+            assertThat(it.size, `is`(2))
+            assertThat(it[0].name, `is`("John Doe"))
+            assertThat(it[0].address.street, `is`("1 York Street"))
+            assertThat(it[1].username, `is`("joedoan"))
+            assertThat(it[1].company.name, `is`("XYZ Company"))
             DLog.i("Users table test passed")
         }
     }
@@ -69,19 +70,19 @@ class DatabaseTest {
         }
         // Check data
         photosDao.photos.testingObserver {
-            assert(it.size == 2)
-            assert(it[0].title == "This is first photo")
-            assert(it[0].albumId == 1)
-            assert(it[1].title == "This is second photo")
-            assert(it[1].url == "https://via.placeholder.com/600/771796")
+            assertThat(it.size, `is`(2))
+            assertThat(it[0].title, `is`("This is first photo"))
+            assertThat(it[0].albumId, `is`(1))
+            assertThat(it[1].title, `is`("This is second photo"))
+            assertThat(it[1].url, `is`("https://via.placeholder.com/600/771796"))
             DLog.i("Photos test passed")
         }
 
         runBlocking {
             val photosWithUserId: List<Photo> = photosDao.photosWithUserId(1).map { it }
-            assert(photosWithUserId.size == 2)
-            assert(photosWithUserId[0].title == "This is first photo")
-            assert(photosWithUserId[1].title == "This is second photo")
+            assertThat(photosWithUserId.size, `is`(2))
+            assertThat(photosWithUserId[0].title, `is`("This is first photo"))
+            assertThat(photosWithUserId[1].title, `is`("This is second photo"))
             DLog.i("PhotosWithUserId test passed")
         }
     }

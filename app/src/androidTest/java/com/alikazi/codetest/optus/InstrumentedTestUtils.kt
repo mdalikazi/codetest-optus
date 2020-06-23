@@ -1,6 +1,5 @@
 package com.alikazi.codetest.optus
 
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
@@ -19,9 +18,4 @@ fun <VH : RecyclerView.ViewHolder> clickOnFirstItemInRecyclerView(recyclerViewId
 
 fun isRecyclerViewNotEmpty(recyclerView: RecyclerView): Boolean {
     return recyclerView.adapter != null && recyclerView.adapter?.itemCount != 0
-}
-
-fun <T> LiveData<T>.testingObserver(onChangeHandler: (T) -> Unit) {
-    val observer = OneTimeObserver(handler = onChangeHandler)
-    observe(observer, observer)
 }
