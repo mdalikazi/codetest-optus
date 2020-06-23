@@ -9,7 +9,6 @@ import com.alikazi.codetest.optus.database.AppDatabase
 import com.alikazi.codetest.optus.database.PhotosDao
 import com.alikazi.codetest.optus.database.UsersDao
 import com.alikazi.codetest.optus.models.Photo
-import com.alikazi.codetest.optus.utils.Constants
 import com.alikazi.codetest.optus.utils.DLog
 import kotlinx.coroutines.runBlocking
 import org.junit.*
@@ -45,7 +44,7 @@ class DatabaseTest {
 
     @Test
     fun a_testUsersTable() {
-        DLog.i("Start Users table test")
+        DLog.i("Start User table test")
         // Insert mock users
         runBlocking {
             usersDao.insertUsers(getMockUsers())
@@ -63,6 +62,7 @@ class DatabaseTest {
 
     @Test
     fun b_testPhotosTable() {
+        DLog.i("Start Photo table test")
         // Insert mock photos
         runBlocking {
             photosDao.insertPhotos(getMockPhotos())
