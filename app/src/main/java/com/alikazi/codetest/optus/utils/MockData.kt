@@ -1,22 +1,10 @@
-package com.alikazi.codetest.optus
+package com.alikazi.codetest.optus.utils
 
 import com.alikazi.codetest.optus.models.Photo
 import com.alikazi.codetest.optus.models.User
 
 fun getMockUsers(): List<User> {
 
-    val address1 = User.Address(
-        street = "1 York Street",
-        suite = "",
-        city = "Sydney",
-        zipcode = "67208",
-        location = User.Geo("-151.9", "31.5")
-    )
-    val company1 = User.Company(
-        name = "ABC Company",
-        catchPharse = "This is a great company",
-        bs = ""
-    )
     val user1 = User(
         id = 1,
         name = "John Doe",
@@ -24,12 +12,9 @@ fun getMockUsers(): List<User> {
         email = "johndoe@gmail.com",
         phone = "1234567890",
         website = "www.johndoe.com",
-        address = address1,
-        company = company1
+        address = getMockAddress1(),
+        company = getMockCompany1()
     )
-
-    val address2 = address1.copy(street = "12 Auburn Road")
-    val company2 = company1.copy(name = "XYZ Company")
     val user2 = User(
         id = 2,
         name = "Joe Doan",
@@ -37,16 +22,35 @@ fun getMockUsers(): List<User> {
         email = "joedoan@outlook.com",
         phone = "0987654321",
         website = "www.joedoan.com",
-        address = address2,
-        company = company2
+        address = getMockAddress2(),
+        company = getMockCompany2()
     )
 
     return listOf(user1, user2)
 
 }
 
-fun getMockPhotos(): List<Photo> {
+fun getMockAddress1(): User.Address =
+    User.Address(
+        street = "1 York Street",
+        suite = "",
+        city = "Sydney",
+        zipcode = "67208",
+        location = User.Geo("-151.9", "31.5")
+    )
 
+fun getMockAddress2() = getMockAddress1().copy(street = "12 Auburn Road")
+
+fun getMockCompany1(): User.Company =
+    User.Company(
+        name = "ABC Company",
+        catchPharse = "This is a great company",
+        bs = ""
+    )
+
+fun getMockCompany2() = getMockCompany1().copy(name = "XYZ Company")
+
+fun getMockPhotos(): List<Photo> {
     val photo1 = Photo(
         id = 1,
         albumId = 1,
