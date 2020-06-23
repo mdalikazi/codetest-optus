@@ -54,9 +54,11 @@ class DatabaseTest {
         usersDao.users.testingObserver {
             assertThat(it.size, `is`(2))
             assertThat(it[0].name, `is`("John Doe"))
-            assertThat(it[0].address.street, `is`("1 York Street"))
+            assertThat(it[0].address.street, `is`(getMockAddress1().street))
+            assertThat(it[0].company.name, `is`(getMockCompany1().name))
             assertThat(it[1].username, `is`("joedoan"))
-            assertThat(it[1].company.name, `is`("XYZ Company"))
+            assertThat(it[1].address.street, `is`(getMockAddress2().street))
+            assertThat(it[1].company.name, `is`(getMockCompany2().name))
             DLog.i("Users table test passed")
         }
     }
