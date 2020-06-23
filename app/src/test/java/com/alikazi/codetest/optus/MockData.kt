@@ -30,15 +30,6 @@ fun getMockUsers(): List<User> {
 
 }
 
-fun getMockCompany1(): User.Company =
-    User.Company(
-        name = "ABC Company",
-        catchPharse = "This is a great company",
-        bs = ""
-    )
-
-fun getMockCompany2() = getMockCompany1().copy(name = "XYZ Company")
-
 fun getMockAddress1(): User.Address =
     User.Address(
         street = "1 York Street",
@@ -49,6 +40,15 @@ fun getMockAddress1(): User.Address =
     )
 
 fun getMockAddress2() = getMockAddress1().copy(street = "12 Auburn Road")
+
+fun getMockCompany1(): User.Company =
+    User.Company(
+        name = "ABC Company",
+        catchPharse = "This is a great company",
+        bs = ""
+    )
+
+fun getMockCompany2() = getMockCompany1().copy(name = "XYZ Company")
 
 fun getMockPhotos(): List<Photo> {
     val photo1 = Photo(
