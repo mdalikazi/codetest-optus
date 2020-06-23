@@ -1,4 +1,4 @@
-package com.alikazi.codetest.optus
+package com.alikazi.codetest.optus.utils
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner

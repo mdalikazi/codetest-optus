@@ -1,37 +1,36 @@
 package com.alikazi.codetest.optus
 
 import android.app.Application
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.alikazi.codetest.optus.database.AppDatabase
 import com.alikazi.codetest.optus.database.PhotosDao
 import com.alikazi.codetest.optus.database.UsersDao
 import com.alikazi.codetest.optus.models.Photo
-import com.alikazi.codetest.optus.utils.DLog
+import com.alikazi.codetest.optus.utils.*
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
-import org.junit.*
+import org.junit.After
+import org.junit.Before
+import org.junit.FixMethodOrder
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
-import org.robolectric.RobolectricTestRunner
 import java.io.IOException
 
-@RunWith(RobolectricTestRunner::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@RunWith(AndroidJUnit4::class)
 class DatabaseTest {
 
     private lateinit var database: AppDatabase
     private lateinit var usersDao: UsersDao
     private lateinit var photosDao: PhotosDao
 
-    @get:Rule
-    val executor = InstantTaskExecutorRule()
-
     @Before
     fun openDatabase() {
-        val context:Application = ApplicationProvider.getApplicationContext()
+        val context: Application = ApplicationProvider.getApplicationContext()
         database = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
         usersDao = database.getUsersDao()
         photosDao = database.getPhotosDao()

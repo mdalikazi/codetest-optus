@@ -1,4 +1,4 @@
-package com.alikazi.codetest.optus
+package com.alikazi.codetest.optus.utils
 
 import com.alikazi.codetest.optus.models.Photo
 import com.alikazi.codetest.optus.models.User

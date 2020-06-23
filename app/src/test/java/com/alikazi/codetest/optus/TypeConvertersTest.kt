@@ -1,8 +1,11 @@
 package com.alikazi.codetest.optus
 
 import com.alikazi.codetest.optus.database.MyTypeConverters
+import com.alikazi.codetest.optus.utils.getMockAddress1
+import com.alikazi.codetest.optus.utils.getMockCompany1
 import com.google.gson.Gson
-import junit.framework.Assert.assertEquals
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 
 class TypeConvertersTest {
@@ -12,22 +15,22 @@ class TypeConvertersTest {
 
     @Test
     fun stringToAddressTest() {
-        assertEquals(getMockAddress1(), MyTypeConverters().stringToAddress(addressJson))
+        assertThat(getMockAddress1(), `is`(MyTypeConverters().stringToAddress(addressJson)))
     }
 
     @Test
     fun addressToStringTest() {
-        assertEquals(addressJson.toString(), MyTypeConverters().addressToString(getMockAddress1()))
+        assertThat(addressJson.toString(), `is`(MyTypeConverters().addressToString(getMockAddress1())))
     }
 
     @Test
     fun stringToCompanyTest() {
-        assertEquals(getMockCompany1(), MyTypeConverters().stringToCompany(companyJson.toString()))
+        assertThat(getMockCompany1(), `is`(MyTypeConverters().stringToCompany(companyJson.toString())))
     }
 
     @Test
     fun companyToStringTest() {
-        assertEquals(companyJson.toString(), MyTypeConverters().companyToString(getMockCompany1()))
+        assertThat(companyJson.toString(), `is`(MyTypeConverters().companyToString(getMockCompany1())))
     }
 
 }
